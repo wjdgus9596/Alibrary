@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+        <table class="table">
+            <thead>
+            <tr class="thead-dark">
+                <th>번호</th>
+                <th>keyword</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if keyword_list %}
+            {% for keyword in keyword_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a>{{ keyword.leyword }}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">등록된 파일이 없습니다.</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+</div>
+<div class="container my-3">
+        <table class="table">
+            <thead>
+            <tr class="thead-dark">
+                <th>번호</th>
+                <th>영상제목</th>
+                <th>URL</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if keyword_list %}
+            {% for keyword in keyword_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a>{{ keyword.video }}</a>
+                </td>
+                <td><a href="{{keyword.url}}">{{keyword.url}}</a></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">등록된 파일이 없습니다.</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+</div>
+
+{% endblock %}

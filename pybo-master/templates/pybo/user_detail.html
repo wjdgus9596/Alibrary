@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+    {% if messages %}
+    <div class="alert alert-danger my-3" role="alert">
+    {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul><li>{{ message.message }}</li></ul>
+    {% endfor %}
+    </div>
+    {% endif %}
+    <h2 class="border-bottom py-2">{{ user.subject }}</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{{ user.content }}</div>
+            <div class="d-flex justify-content-end">
+                <div class="badge badge-light p-2 text-left">
+                    <div class="mb-2">{{ user.author.username }}</div>
+                    <div>{{ user.create_date }}</div>
+                </div>
+            </div>
+            {% if request.user == user.author %}
+            <div class="my-3">
+                <a href="{% url 'pybo:user_modify' user.id  %}"
+                  class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="#" class="delete btn btn-sm btn-outline-secondary"
+                  data-uri="{% url 'pybo:user_delete' user.id  %}">삭제</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container my-3">
+        <table class="table">
+            <thead>
+            <tr class="text-center thead-dark">
+                <th>No.</th>
+                <th>Title</th>
+                <th>ID</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if upload_list %}
+            {% for upload in upload_list %}
+            <tr class="text-center">
+                <td>{{ forloop.counter }}</td>
+                <td class>
+                    <a href="{% url 'pybo:upload_detail' upload.id %}">{{ upload.title }}</a>
+                </td>
+                <td>{{ upload.author.username }}</td>
+                <td>{{ upload.create_date }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">등록된 파일이 없습니다.</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        <a href="{% url 'pybo:upload_create' %}" class="btn btn-primary">파일 등록하기</a>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+$(document).ready(function(){
+    $(".delete").on('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = $(this).data('uri');
+        }
+    });
+});
+</script>
+{% endblock %}

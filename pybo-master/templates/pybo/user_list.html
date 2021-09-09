@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="text-center thead-dark">
+            <th>No.</th>
+            <th>User</th>
+            <th>ID</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if user_list %}
+        {% for user in user_list %}
+        <tr class="text-center">
+            <td>{{ forloop.counter }}</td>
+            <td class>
+                <a href="{% url 'pybo:detail' user.id %}">{{ user.subject }}</a>
+            </td>
+            <td>{{ user.author.username }}</td>
+            <td>{{ user.create_date }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">등록된 데이터가 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <a href="{% url 'pybo:user_create' %}" class="btn btn-primary">사용자 등록하기</a>
+</div>
+
+{% endblock %}

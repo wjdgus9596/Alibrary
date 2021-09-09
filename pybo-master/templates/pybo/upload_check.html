@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">File Check</h5>
+    {% if question_list %}
+    {% for question in question_list %}
+        <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
